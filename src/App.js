@@ -2,6 +2,8 @@ import './App.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "animate.css/animate.compat.css"
+import ScrollAnimation from 'react-animate-on-scroll';
 
 function App() {
 
@@ -22,7 +24,7 @@ function App() {
       <header className="App-header">
         <div className='container'>
           {/* <img src={require('./img/logo.png')}></img> */}
-          <h1 className='logo'>Kendall Contreras</h1>
+          <h1 className='logo'><span className='change-color'>Kendall</span> Rcs</h1>
           <nav>
             <ul>
               <li><a href='#hero'>Inicio</a></li>
@@ -36,9 +38,9 @@ function App() {
       <div className='hero' id='hero'>
         <div className='hero__container container'>
           <div className='hero__text'>
-            <h1 className='title'>Kendall Contreras</h1>
-            <p>Front-End Developer</p>
-            <p className='hero__text__p'>Soy un apasionado desarrollador Front-End con un fuerte enfoque en la creación de aplicaciones web visualmente atractivas y fáciles de usar.</p>
+            <h1 className='title'><span className='primaryColor'>Kendall</span> Contreras</h1>
+            <p>FullStack Developer</p>
+            <p className='hero__text__p'>Soy un apasionado desarrollador FullStack con un fuerte enfoque en la creación de aplicaciones web visualmente atractivas y fáciles de usar.</p>
             <div className='hero__btn'>
               <button className='hero__btn__cv'>Ver CV</button>
               <button className='hero__btn__contact'>Contactar</button>
@@ -47,7 +49,7 @@ function App() {
           <img className='hero__img' src={require('./img/profile.png')}></img>
         </div>
       </div>
-      <section className='tech' id='tech'>
+      <ScrollAnimation animateIn="fadeIn" animateOnce={true}  className='tech' id='tech'>
         <h2 className='subTitle'>Tecnologías</h2>
         <p className='text--gray'>Estas son las tecnologías en las que me especializo</p>
         <Slider 
@@ -55,72 +57,78 @@ function App() {
           className='tech__list'
         >
           <div className='tech__list__item'>
-            <i class="devicon-react-original"></i>
+            <i class="devicon-react-original colored"></i>
             <p>React</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-vuejs-plain"></i>
+            <i class="devicon-vuejs-plain colored"></i>
             <p>Vuejs</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-angularjs-plain"></i>
+            <i class="devicon-angularjs-plain colored"></i>
             <p>Angular</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-nodejs-plain"></i>
+            <i class="devicon-nodejs-plain colored"></i>
             <p>NodeJS</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-nestjs-original"></i>
+            <i class="devicon-nestjs-original colored"></i>
             <p>NestJS</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-javascript-plain"></i>
+            <i class="devicon-javascript-plain colored"></i>
             <p>JavaScript</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-typescript-plain"></i>
+            <i class="devicon-typescript-plain colored"></i>
             <p>TypeScript</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-ionic-original"></i>
+            <i class="devicon-ionic-original colored"></i>
             <p>Ionic</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-git-plain"></i>
+            <i class="devicon-git-plain colored"></i>
             <p>Git</p>
           </div>
           <div className='tech__list__item'>
-            <i class="devicon-figma-plain"></i>
+            <i class="devicon-figma-plain colored"></i>
             <p>Figma</p>
           </div>
          
         </Slider>
-      </section>
-      <section className='projects' id='projects'>
+      </ScrollAnimation>
+      <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='projects' id='projects'>
         <div className='projects__container container'>
-          <h2 className='subTitle'>Mis Proyectos</h2>
+          <h2 className='subTitle primaryColor'>Mis Proyectos</h2>
           <p className='text--gray'>Estos son algunos de los proyectos en los que he trabajado</p>
           <div className='projects__list'>
-            <div className='projects__list__item'>
+            <ScrollAnimation animateIn='flipInX' animateOnce={true} className='projects__list__item'>
               <img src="./img/project1.png"></img>
-              <h3>Proyecto 1</h3>
-              <p>Descripción del proyecto 1</p>
-            </div>
-            <div className='projects__list__item'>
+              <div className='projects__list__item__text'>
+                <h3>Proyecto 1</h3>
+                <p>Descripción del proyecto 1</p>
+              </div>
+            </ScrollAnimation>
+            <ScrollAnimation animateIn='flipInX' animateOnce={true} className='projects__list__item'>
               <img src="./img/project2.png"></img>
-              <h3>Proyecto 2</h3>
-              <p>Descripción del proyecto 2</p>
-            </div>
-            <div className='projects__list__item'>
+              <div className='projects__list__item__text'>
+                <h3>Proyecto 2</h3>
+                <p>Descripción del proyecto 2</p>
+              </div>
+            </ScrollAnimation>
+            <ScrollAnimation animateIn='flipInX' animateOnce={true} className='projects__list__item'>
               <img src="./img/project3.png"></img>
-              <h3>Proyecto 3</h3>
-              <p>Descripción del proyecto 3</p>
-            </div>
+              <div className='projects__list__item__text'>
+                <h3>Proyecto 3</h3>
+                <p>Descripción del proyecto 3</p>
+              </div>
+            </ScrollAnimation>
           </div>
         </div>
-      </section>
-      <section className='contact container' id='contact'>
+      </ScrollAnimation>
+      <ScrollAnimation animateIn="fadeIn" animateOnce={true}  className='contact container' id='contact'>
         <h2 className='subTitle'>Contacto</h2>
         <p className='text--gray'>Si deseas ponerte en contacto conmigo, no dudes en dejarme un mensaje</p>
         <form>
@@ -138,7 +146,7 @@ function App() {
           </label>
           <button className="contact__btn">Enviar</button>
         </form>
-      </section>
+      </ScrollAnimation>
       <footer className='footer'>
         <div className='footer__social'>
           <i class="devicon-linkedin-plain"></i>
