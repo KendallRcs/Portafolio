@@ -1,139 +1,145 @@
 import './App.css';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
 
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 4000,
+    autoplaySpeed: 4000,
+    pauseOnHover: false,
+    cssEase: "linear"
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className='container'>
+          {/* <img src={require('./img/logo.png')}></img> */}
+          <h1 className='logo'>Kendall Contreras</h1>
+          <nav>
+            <ul>
+              <li><a href='#'>Inicio</a></li>
+              <li><a href='#'>Tecnologías</a></li>
+              <li><a href='#'>Proyectos</a></li>
+              <li><a href='#'>Contacto</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
       <div className='hero'>
         <div className='hero__container container'>
           <div className='hero__text'>
-            <h1>Kendall Contreras</h1>
-            <h3>Front-End Developer</h3>
-            <p>Soy un apasionado desarrollador Front-End con un fuerte enfoque en la creación de aplicaciones web visualmente atractivas y fáciles de usar.</p>
+            <h1 className='title'>Kendall Contreras</h1>
+            <p>Front-End Developer</p>
+            <p className='hero__text__p'>Soy un apasionado desarrollador Front-End con un fuerte enfoque en la creación de aplicaciones web visualmente atractivas y fáciles de usar.</p>
             <div className='hero__btn'>
               <button className='hero__btn__cv'>Ver CV</button>
               <button className='hero__btn__contact'>Contactar</button>
             </div>
           </div>
-          <img src="./img/profile.png"></img>
+          <img className='hero__img' src={require('./img/profile.png')}></img>
         </div>
       </div>
       <section className='tech'>
-        <h2>Tecnologías</h2>
-        <p>Estas son las tecnologías en las que me especializo</p>
-        <Carousel 
-          responsive={responsive}
-          showDots={false}
-          autoPlay={true}
-          autoPlaySpeed={1000}
-          customTransition="all 1s linear"
-          infinite={true}
-          arrows={false}
+        <h2 className='subTitle'>Tecnologías</h2>
+        <p className='text--gray'>Estas son las tecnologías en las que me especializo</p>
+        <Slider 
+          {...settings}
+          className='tech__list'
         >
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-react-original"></i>
             <p>React</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-vuejs-plain"></i>
             <p>Vuejs</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-angularjs-plain"></i>
             <p>Angular</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-nodejs-plain"></i>
             <p>NodeJS</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-nestjs-original"></i>
             <p>NestJS</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-javascript-plain"></i>
             <p>JavaScript</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-typescript-plain"></i>
             <p>TypeScript</p>
           </div>
           <div className='tech__list__item'>
-            <img src="./img/react.png"></img>
+            <i class="devicon-ionic-original"></i>
             <p>Ionic</p>
           </div>
+          <div className='tech__list__item'>
+            <i class="devicon-git-plain"></i>
+            <p>Git</p>
+          </div>
+          <div className='tech__list__item'>
+            <i class="devicon-figma-plain"></i>
+            <p>Figma</p>
+          </div>
          
-        </Carousel>
+        </Slider>
       </section>
       <section className='projects'>
-        <h2>Mis Proyectos</h2>
-        <p>Estos son algunos de los proyectos en los que he trabajado</p>
-        <div className='projects__list'>
-          <div className='projects__list__item'>
-            <img src="./img/project1.png"></img>
-            <h3>Proyecto 1</h3>
-            <p>Descripción del proyecto 1</p>
-          </div>
-          <div className='projects__list__item'>
-            <img src="./img/project2.png"></img>
-            <h3>Proyecto 2</h3>
-            <p>Descripción del proyecto 2</p>
-          </div>
-          <div className='projects__list__item'>
-            <img src="./img/project3.png"></img>
-            <h3>Proyecto 3</h3>
-            <p>Descripción del proyecto 3</p>
+        <div className='projects__container container'>
+          <h2 className='subTitle'>Mis Proyectos</h2>
+          <p className='text--gray'>Estos son algunos de los proyectos en los que he trabajado</p>
+          <div className='projects__list'>
+            <div className='projects__list__item'>
+              <img src="./img/project1.png"></img>
+              <h3>Proyecto 1</h3>
+              <p>Descripción del proyecto 1</p>
+            </div>
+            <div className='projects__list__item'>
+              <img src="./img/project2.png"></img>
+              <h3>Proyecto 2</h3>
+              <p>Descripción del proyecto 2</p>
+            </div>
+            <div className='projects__list__item'>
+              <img src="./img/project3.png"></img>
+              <h3>Proyecto 3</h3>
+              <p>Descripción del proyecto 3</p>
+            </div>
           </div>
         </div>
       </section>
-      <section className='contact'>
-        <h2>Contacto</h2>
-        <p>Si deseas ponerte en contacto conmigo, no dudes en contactarte conmigo</p>
+      <section className='contact container'>
+        <h2 className='subTitle'>Contacto</h2>
+        <p className='text--gray'>Si deseas ponerte en contacto conmigo, no dudes en dejarme un mensaje</p>
         <form>
           <label>
-            Nombre:
+            <span>Nombre:</span>
             <input type='text' placeholder='Nombre'></input>
           </label>
           <label>
             Correo:
             <input type='text' placeholder='Correo'></input>
           </label>
-          <textarea placeholder='Mensaje'></textarea>
-          <button>Enviar</button>
+          <label>
+            Mensaje:
+            <textarea placeholder='Mensaje' rows={10}></textarea>
+          </label>
+          <button className="contact__btn">Enviar</button>
         </form>
       </section>
-      <footer>
+      <footer className='footer'>
         <p>Hecho con ❤️ por Kendall Contreras</p>
       </footer>
     </div>
