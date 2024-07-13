@@ -80,6 +80,15 @@ h1, h2{
   color: rgb(88, 132, 254);
 }
 
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
 .change-color {
   color: white;
   animation-name: change-color;
@@ -90,6 +99,13 @@ h1, h2{
 
 }
 
+.hidden {
+  transform: translateX(-1000px) !important;
+  transition: all 0.6s ease;
+}
+.nav-menu-responsive{
+  display: none;
+}
 @keyframes change-color {
   from {
     color: white;
@@ -129,17 +145,22 @@ h1, h2{
   display: flex;
   gap: 1rem;
 }
+.hero__btn a{
+  text-decoration: none;
+}
 .hero__btn__cv{
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(88, 132, 254);
   color: white;
   padding: .8rem 2.3rem;
-  border: 1px solid black;
+  border: 1px solid rgb(88, 132, 254);
   border-radius: 5px;
   cursor: pointer;
   transition: all .3s ease;
 }
 .hero__btn__cv:hover{
-  background-color: rgba(255, 255, 255, 0);
+  background-color: white;
+  border: 1px solid white;
+  color: black;
 }
 .hero__btn__contact{
   background-color: rgba(255, 255, 255, 0);
@@ -190,6 +211,8 @@ h1, h2{
   border-radius: 20px;
   transition: all .3s ease;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 .projects__list__item:hover{
   transform: translateY(-10px);
@@ -200,6 +223,8 @@ h1, h2{
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
+  transition: opacity 0.5s ease;
+
 }
 .projects__list__item__text{
   padding: 1rem;
@@ -276,15 +301,16 @@ form textarea{
 .footer__contact__icon p{
   font-size: .2rem;
 }
-.footer__social i{
+.footer__social a{
   font-size: 1.4rem;
   color: white;
   transition: all .3s ease;
   padding: .7rem;
   border: 1px solid white;
   border-radius: 50%;
+  text-decoration: none;
 }
-.footer__social i:hover{
+.footer__social a:hover{
   background-color: rgb(88, 132, 254);
   border: 1px solid rgb(88, 132, 254);
   color: black;
@@ -302,6 +328,54 @@ form textarea{
 }
 
 @media screen and (max-width: 768px){
+  .menu-button {
+    display: block;
+  }
+  .nav-menu{
+    display: none;
+  }
+  .nav-menu-responsive {
+    transition: font-size 0.3s ease;
+  }
+  .nav-menu-responsive h1 {
+    width: auto;
+    cursor: pointer;
+    text-align: center;
+  }
+  .nav-menu-responsive ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40%;
+    margin-top: 3rem;
+    padding: 0;
+  }
+  .nav-menu-responsive li a {
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: font-size 0.3s ease;
+    color: white;
+    font-size: 25px;
+    font-weight: light;
+  }
+  .nav-menu-responsive {
+    display: block;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100vh;
+    background-color: rgb(119, 155, 252);
+    z-index: 99999;
+    padding: 20px;
+    color: #fff;
+    transition: all 0.6s ease;
+  }
+  .nav-menu-responsive .logo {
+    margin: 0 0 2rem 0;
+  }
+
   .hero{
     height: 100%;
   }
