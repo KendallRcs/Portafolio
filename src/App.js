@@ -25,15 +25,15 @@ function App() {
           <h1 className='logo'>Kendall Contreras</h1>
           <nav>
             <ul>
-              <li><a href='#'>Inicio</a></li>
-              <li><a href='#'>Tecnologías</a></li>
-              <li><a href='#'>Proyectos</a></li>
-              <li><a href='#'>Contacto</a></li>
+              <li><a href='#hero'>Inicio</a></li>
+              <li><a href='#tech'>Tecnologías</a></li>
+              <li><a href='#projects'>Proyectos</a></li>
+              <li><a href='#contact'>Contacto</a></li>
             </ul>
           </nav>
         </div>
       </header>
-      <div className='hero'>
+      <div className='hero' id='hero'>
         <div className='hero__container container'>
           <div className='hero__text'>
             <h1 className='title'>Kendall Contreras</h1>
@@ -47,7 +47,7 @@ function App() {
           <img className='hero__img' src={require('./img/profile.png')}></img>
         </div>
       </div>
-      <section className='tech'>
+      <section className='tech' id='tech'>
         <h2 className='subTitle'>Tecnologías</h2>
         <p className='text--gray'>Estas son las tecnologías en las que me especializo</p>
         <Slider 
@@ -97,7 +97,7 @@ function App() {
          
         </Slider>
       </section>
-      <section className='projects'>
+      <section className='projects' id='projects'>
         <div className='projects__container container'>
           <h2 className='subTitle'>Mis Proyectos</h2>
           <p className='text--gray'>Estos son algunos de los proyectos en los que he trabajado</p>
@@ -120,7 +120,7 @@ function App() {
           </div>
         </div>
       </section>
-      <section className='contact container'>
+      <section className='contact container' id='contact'>
         <h2 className='subTitle'>Contacto</h2>
         <p className='text--gray'>Si deseas ponerte en contacto conmigo, no dudes en dejarme un mensaje</p>
         <form>
@@ -140,7 +140,22 @@ function App() {
         </form>
       </section>
       <footer className='footer'>
-        <p>Hecho con ❤️ por Kendall Contreras</p>
+        <div className='footer__social'>
+          <i class="devicon-linkedin-plain"></i>
+          <i class="devicon-github-original"></i>
+        </div>
+        <div className='footer__contact'>
+          <div className='footer__contact__item'>
+            <img src='https://cdn.icon-icons.com/icons2/2065/PNG/512/at_symbol_icon_125064.png'></img>
+            <p>kendallramiro@gmail.com</p>
+          </div>
+          <div className='footer__contact__item'>
+            <img src='https://static-00.iconduck.com/assets.00/call-icon-1023x1024-7i32yqt3.png'></img>
+            <p>+51 970569642</p>
+          </div>
+        </div>
+        <p>© 2024 Kendall Ramiro Contreras Salazar</p>
+
       </footer>
     </div>
   );
