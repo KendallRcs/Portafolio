@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -6,6 +6,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "animate.css/animate.compat.css"
 import ScrollAnimation from 'react-animate-on-scroll';
 import { useMediaQuery } from 'react-responsive'
+import emailjs from '@emailjs/browser';
+import toast, { Toaster } from 'react-hot-toast';
+import Modal from 'react-bootstrap/Modal';
+import Carousel from 'react-bootstrap/Carousel'
 import img1Pro1 from './img/JJC_logo.png';
 import img2Pro1 from './img/rest1.jpg';
 import img3Pro1 from './img/rest2.jpg';
@@ -27,84 +31,44 @@ import img3Pro3 from './img/pam2.jpg';
 import img4Pro3 from './img/pam3.jpg';
 import img5Pro3 from './img/pam4.jpg';
 
-
-/* import img5 from './img/CRUZ_logo.jpg';
-import img6 from './img/csur1.jpg';
-import img7 from './img/csur2.jpg';
-import img8 from './img/csur3.jpg'; */
 function App() {
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [projectSelected, setProjectSelected] = useState(0);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
-  const imagesProject1 = [img1Pro1, img2Pro1, img3Pro1, img4Pro1, img5Pro1, img6Pro1, img7Pro1];
-  const imagesProject2 = [img1Pro2, img2Pro2, img3Pro2, img4Pro2, img5Pro2, img6Pro2, img7Pro2, img8Pro2];
-  const imagesProject3 = [img1Pro3, img2Pro3, img3Pro3, img4Pro3, img5Pro3];
-  const [currentImageProject1, setCurrentImageProject1] = useState(imagesProject1[0]);
-  const [currentImageProject2, setCurrentImageProject2] = useState(imagesProject2[0]);
-  const [currentImageProject3, setCurrentImageProject3] = useState(imagesProject3[0]);
+  const imagesProject1 = [img3Pro1, img4Pro1, img2Pro1, img5Pro1, img6Pro1, img7Pro1];
+  const imagesProject2 = [img2Pro2, img3Pro2, img4Pro2, img5Pro2, img6Pro2, img7Pro2, img8Pro2];
+  const imagesProject3 = [img2Pro3, img3Pro3, img4Pro3, img5Pro3];
+  let [imagesProjectSelected, setImagesProjectSelected] = useState([]);
+  const [textProjectSelected, setTextProjectSelected] = useState('');
+  const project1Description = "Restricciones es un sistema de gestión de requerimientos desarrollado para JJC-SAT. Este proyecto incluye tanto una aplicación web como una aplicación móvil. La aplicación permite a los usuarios gestionar y seguir de manera eficiente los diferentes requerimientos y restricciones dentro de la empresa.\n\nEl frontend fue desarrollado utilizando Vue.js para la versión Web y Ionic con Angular para la versión móvil. Para el backend, se utilizó NestJS\n\nEste sistema fue diseñado para mejorar la organización y el seguimiento de los requerimientos, asegurando una comunicación clara y eficiente entre los diferentes departamentos de JJC-SAT.";
+  const project2Description = "El proyecto de registro de actividades y servicios fue desarrollado para Cruz del Sur, permitiendo a la empresa gestionar de manera eficiente sus actividades y servicios. Este sistema incluye una aplicación web y una aplicación móvil, proporcionando flexibilidad y accesibilidad a los usuarios.\n\nEl frontend fue desarrollado utilizando Vue.js para la versión Web y Ionic con Vue3 para la versión móvil. Para el backend, se utilizó NestJS.\n\nEste sistema fue diseñado para mejorar la organización y el seguimiento de las actividades y servicios, asegurando una comunicación clara y eficiente dentro de Cruz del Sur.";
+  const project3Description = "Accesos es una solución desarrollada para Pamolsa, diseñada para gestionar las entradas y salidas de empleados y vehículos de la empresa. Este proyecto incluye tanto una aplicación web como una aplicación móvil. La aplicación permite a los usuarios registrar y controlar de manera eficiente el acceso al sitio, mejorando la seguridad y la gestión operativa.\n\nEl frontend fue desarrollado utilizando Vue.js para la versión Web y Ionic con Angular para la versión móvil. Para el backend, se utilizó NestJS.\n\nEste sistema fue diseñado para mejorar la organización y el seguimiento de los accesos, asegurando una comunicación clara y eficiente dentro de Pamolsa.";
 
-
-  const intervalIdRef = useRef(null);
-
-  const startImageRotation1 = () => {
-    setCurrentImageProject1(imagesProject1[1]);
-    let index = 0;
-    intervalIdRef.current = setInterval(() => {
-      index = (index + 1) % imagesProject1.length;
-      if(index === 0) index = 1;
-      setCurrentImageProject1(imagesProject1[index]);
-    }, 2000);
-  };
-
-  const stopImageRotation1 = () => {
-    if (intervalIdRef.current) {
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
+  useEffect(() => {
+    switch(projectSelected) {
+      case 1:
+        setImagesProjectSelected(imagesProject1)
+        setTextProjectSelected(project1Description)
+        break;
+      case 2:
+        setImagesProjectSelected(imagesProject2)
+        setTextProjectSelected(project2Description)
+        break;
+      case 3:
+        setImagesProjectSelected(imagesProject3)
+        setTextProjectSelected(project3Description)
+        break;
+      default:
+        imagesProjectSelected = [];
     }
-    setCurrentImageProject1(imagesProject1[0]);
-  };
-
-  
-  const startImageRotation2 = () => {
-    setCurrentImageProject2(imagesProject2[1]);
-    let index = 0;
-    intervalIdRef.current = setInterval(() => {
-      index = (index + 1) % imagesProject2.length;
-      if(index === 0) index = 1;
-      setCurrentImageProject2(imagesProject2[index]);
-    }, 2000);
-  };
-  const stopImageRotation2 = () => {
-    if (intervalIdRef.current) {
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
-    }
-    setCurrentImageProject2(imagesProject2[0]);
-  };
-
-
-  const startImageRotation3 = () => {
-    setCurrentImageProject3(imagesProject3[1]);
-    let index = 0;
-    intervalIdRef.current = setInterval(() => {
-      index = (index + 1) % imagesProject3.length;
-      if(index === 0) index = 1;
-      setCurrentImageProject3(imagesProject3[index]);
-    }, 2000);
-  };
-  const stopImageRotation3 = () => {
-    if (intervalIdRef.current) {
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
-    }
-    setCurrentImageProject3(imagesProject3[0]);
-  };
-
+  }, [projectSelected]);
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: isMobile ? 3 : 5,
+    slidesToShow: isMobile ? 3 : 7,
     slidesToScroll: 1,
     autoplay: true,
     speed: 4000,
@@ -116,6 +80,63 @@ function App() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const [form, setForm] = useState({name: '', email: '', message: ''});
+  const formRef = useRef(null);
+  const handleForm = (e) => {
+    setForm({...form, [e.target.name]: e.target.value});
+  }
+
+  const resetForm = () => {
+    setForm({name: '', email: '', message: ''});
+  }
+
+  const sendForm = (e) => {
+    e.preventDefault();
+    console.log(form);
+    if(form.name === '' || form.email === '' || form.message === '' ){
+      toast.error("Por favor, complete todos los campos", {
+        duration: 3000,
+          position: 'bottom-right',
+      } );
+      return;
+  }else{
+    /* toast.promise(
+      (() => {emailjs.sendForm('service_d8ldbfv', 'template_76tjo5e', formRef.current, {publicKey: 'rzHMm3BziiHJs7uPs'})}),
+       {
+         loading: 'Enviando...',
+         success: <b>Mensaje Enviado!</b>,
+         error: <b>Hubo un error</b>,
+       },
+       {
+          success: {
+            duration: 3000,
+            position: 'bottom-right',
+          },
+          error: {
+            duration: 3000,
+            position: 'bottom-right',
+          }
+       }
+     ); */
+      emailjs.sendForm('service_d8ldbfv', 'template_76tjo5e', formRef.current, {publicKey: 'rzHMm3BziiHJs7uPs'}).then(
+          () => {
+              toast.success("Mensaje Enviado", {
+              duration: 3000,
+              position: 'bottom-right',
+              } );
+              resetForm();
+          },
+          (error) => {
+              toast.error(`Hubo un problema al enviar tu formulario. Por favor, intenta nuevamente. ${error}`, {
+                  duration: 3000,
+                  position: 'bottom-right',
+              } );
+              console.log("ERROR", error)
+          },
+      );
+  }
+  }
 
   return (
     <div className="App">
@@ -187,6 +208,10 @@ function App() {
               <p>NestJS</p>
             </div>
             <div className='tech__list__item'>
+              <i class="devicon-mysql-original colored"></i>
+              <p>MySQL</p>
+            </div>
+            <div className='tech__list__item'>
               <i class="devicon-javascript-plain colored"></i>
               <p>JavaScript</p>
             </div>
@@ -217,29 +242,29 @@ function App() {
             <p className='text--gray'>Estos son algunos de los proyectos para grandes empresas en los que he trabajado</p>
             <div className='projects__list'>
               <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                <div className='projects__list__item' onMouseEnter={startImageRotation1} onMouseLeave={stopImageRotation1}>
-                  <img src={currentImageProject1}></img>
+                <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(1)}}>
+                  <img src={img1Pro1}></img>
                   <div className='projects__list__item__text'>
-                    <h3>Proyecto 1</h3>
-                    <p>Descripción del proyecto 1</p>
+                    <h3>Restricciones</h3>
+                    <p>Desarrollado en Simplex Go</p>
                   </div>
                 </div>
               </ScrollAnimation>
               <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                <div className='projects__list__item' onMouseEnter={startImageRotation2} onMouseLeave={stopImageRotation2}>
-                  <img src={currentImageProject2}></img>
+                <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(2)}}>
+                  <img src={img1Pro2}></img>
                   <div className='projects__list__item__text'>
-                    <h3>Proyecto 2</h3>
-                    <p>Descripción del proyecto 2</p>
+                    <h3>Cruz del Sur</h3>
+                    <p>Desarrollado en Simplex Go</p>
                   </div>
                 </div>
               </ScrollAnimation>
               <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                <div className='projects__list__item' onMouseEnter={startImageRotation3} onMouseLeave={stopImageRotation3}>
-                  <img src={currentImageProject3}></img>
+                <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(3)}}>
+                  <img src={img1Pro3}></img>
                   <div className='projects__list__item__text'>
-                    <h3>Proyecto 3</h3>
-                    <p>Descripción del proyecto 3</p>
+                    <h3>Accesos</h3>
+                    <p>Desarrollado en Simplex Go</p>
                   </div>
                 </div>
               </ScrollAnimation>
@@ -247,24 +272,68 @@ function App() {
           </div>
         </ScrollAnimation>
       </div>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        dialogClassName="modalGallery"
+        aria-labelledby="example-custom-modal-styling-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            {projectSelected === 1 ? 'Grupo JJC-SAT' : projectSelected === 2 ? 'Cruz del Sur' : 'Pamolsa'}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Carousel>
+          { 
+            imagesProjectSelected.map((image, index) => (
+              <Carousel.Item interval={2000}>
+                <img
+                  className="carousel-img"
+                  src={image}
+                  alt={`Slide ${index}`}
+                />
+              </Carousel.Item>
+            ))
+          }
+        </Carousel>
+        <p className='modalGallery__text'>{textProjectSelected}</p>
+        <div className='modalGallery__tech'>
+          <div className='modalGallery__tech__front'>
+            <h3>Front-End</h3>
+            <div className='modalGallery__tech__item'>
+              <i class="devicon-vuejs-plain colored"></i>
+              <i class="devicon-ionic-original colored"></i>
+              { projectSelected !== 2 && <i class="devicon-angularjs-plain colored"></i>}
+            </div>
+          </div>
+          <div className='modalGallery__tech__back'>
+            <h3>Back-End</h3>
+            <div className='modalGallery__tech__item'>
+              <i class="devicon-nestjs-plain colored"></i>
+            </div>
+          </div>
+        </div>
+        </Modal.Body>
+      </Modal>
       <div id='contact'>
         <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='contact container'>
           <h2 className='subTitle'>Contacto</h2>
           <p className='text--gray'>Si deseas ponerte en contacto conmigo, no dudes en dejarme un mensaje</p>
-          <form>
+          <form ref={formRef} onSubmit={sendForm}>
             <label>
               <span>Nombre:</span>
-              <input type='text' placeholder='Nombre'></input>
+              <input name="name" value={form.name} onChange={handleForm} type='text' placeholder='Nombre'></input>
             </label>
             <label>
               Correo:
-              <input type='text' placeholder='Correo'></input>
+              <input name="email" value={form.email} onChange={handleForm} type='text' placeholder='Correo'></input>
             </label>
             <label>
               Mensaje:
-              <textarea placeholder='Mensaje' rows={10}></textarea>
+              <textarea name="message" value={form.message} onChange={handleForm} placeholder='Mensaje' rows={10}></textarea>
             </label>
-            <button className="contact__btn">Enviar</button>
+            <button className="contact__btn" type="submit">Enviar</button>
           </form>
         </ScrollAnimation>
       </div>
@@ -286,6 +355,7 @@ function App() {
         <p>© 2024 Kendall Ramiro Contreras Salazar</p>
 
       </footer>
+      <Toaster />
     </div>
   );
 }
