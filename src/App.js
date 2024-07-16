@@ -30,6 +30,13 @@ import img2Pro3 from './img/pam1.jpg';
 import img3Pro3 from './img/pam2.jpg';
 import img4Pro3 from './img/pam3.jpg';
 import img5Pro3 from './img/pam4.jpg';
+import logo_web from './img/logo_web.png';
+import logo_mobile from './img/logo_mobile.png';
+import logo_mobile2 from './img/logo_mobile2.png';
+import union_secondary_up from './img/union_secondary_up.png';
+import union_secondary_down from './img/union_secondary_down.png';
+import union_tertiary_up from './img/union_tertiary_up.png';
+import union_tertiary_down from './img/union_tertiary_down.png';
 
 function App() {
 
@@ -37,7 +44,8 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [projectSelected, setProjectSelected] = useState(0);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
-
+  const main = useRef()
+  const footer = useRef()
   const imagesProject1 = [img3Pro1, img4Pro1, img2Pro1, img5Pro1, img6Pro1, img7Pro1];
   const imagesProject2 = [img2Pro2, img3Pro2, img4Pro2, img5Pro2, img6Pro2, img7Pro2, img8Pro2];
   const imagesProject3 = [img2Pro3, img3Pro3, img4Pro3, img5Pro3];
@@ -65,6 +73,28 @@ function App() {
         imagesProjectSelected = [];
     }
   }, [projectSelected]);
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "none"}}
+        onClick={onClick}
+      />
+    );
+  }
+  
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "none"}}
+        onClick={onClick}
+      />
+    );
+  }
   const settings = {
     dots: false,
     infinite: true,
@@ -74,10 +104,20 @@ function App() {
     speed: 4000,
     autoplaySpeed: 4000,
     pauseOnHover: false,
-    cssEase: "linear"
+    cssEase: "linear",
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />
   };
 
   const toggleMenu = () => {
+    if(!menuOpen) {
+      main.current.style.filter = "blur(4px)"
+      footer.current.style.filter = "blur(4px)"
+    }
+    else {
+      main.current.style.filter = "blur(0px)"
+      footer.current.style.filter = "blur(0px)"
+    }
     setMenuOpen(!menuOpen);
   };
 
@@ -142,7 +182,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className='container'>
-          <h1 className='logo'><span className='change-color'>Kendall</span> Rcs</h1>
+          <img className='App-header__logo' src={logo_web}></img>
           <button className="menu-button" onClick={toggleMenu}>
             ☰
           </button>
@@ -151,193 +191,208 @@ function App() {
               <li><a href='#hero'>Inicio</a></li>
               <li><a href='#tech'>Tecnologías</a></li>
               <li><a href='#projects'>Proyectos</a></li>
-              <li><a href='#contact'>Contacto</a></li>
+              <li><a href='#contact' className='nav-menu__cta'>Contacto</a></li>
             </ul>
           </nav>
           <nav className={`nav-menu-responsive ${menuOpen ? '' : 'hidden'}`}>
-              <h1 className='logo'><span className='change-color'>Kendall</span> Rcs</h1>
+            <div className='w-100'>
+              <img className='App-header__logo-mobile' src={logo_mobile2}></img>
+            </div>
             <ul>
               <li><a href='#hero' onClick={toggleMenu}>Inicio</a></li>
               <li><a href='#tech' onClick={toggleMenu}>Tecnologías</a></li>
               <li><a href='#projects' onClick={toggleMenu}>Proyectos</a></li>
               <li><a href='#contact' onClick={toggleMenu}>Contacto</a></li>
             </ul>
+            <div className='nav-menu-responsive-footer__social'>
+              <a href='https://www.linkedin.com/in/kendall-ramiro-contreras-salazar-b4360620b/' target='_blank'><i class="devicon-linkedin-plain"></i></a>
+              <a href='https://github.com/KendallRcs' target='_blank'><i class="devicon-github-original"></i></a>
+            </div>
           </nav>
         </div>
       </header>
-      <div className='hero' id='hero'>
-        <div className='hero__container container'>
-          <div className='hero__text'>
-            <h1 className='title'><span className='primaryColor'>Kendall</span> Contreras</h1>
-            <p>FullStack Developer</p>
-            <p className='hero__text__p'>Soy un apasionado desarrollador FullStack con un fuerte enfoque en la creación de aplicaciones web visualmente atractivas y fáciles de usar.</p>
-            <div className='hero__btn'>
-              <a className='hero__btn__cv' target='_blank' href="https://drive.google.com/file/d/128JZ8x_Q3iIAJzHiAGt1YGdBLnlrXnVD/view?usp=sharing">Ver CV</a>
-              <a className='hero__btn__contact' target='_blank' href="https://wa.me/970569642">Contactar</a>
+      <main ref={main}>
+        <div className='hero' id='hero'>
+          <div className='hero__container container'>
+            <div className='hero__text'>
+              <h1 className='title'><span className='primaryColor'>Kendall</span> Contreras</h1>
+              <p>FullStack Developer</p>
+              <p className='hero__text__p'>Soy un apasionado desarrollador FullStack con un fuerte enfoque en la creación de aplicaciones web visualmente atractivas y fáciles de usar.</p>
+              <div className='hero__btn'>
+                <a className='hero__btn__cv' target='_blank' href="https://drive.google.com/file/d/128JZ8x_Q3iIAJzHiAGt1YGdBLnlrXnVD/view?usp=sharing">Ver CV</a>
+                <a className='hero__btn__contact' target='_blank' href="https://wa.me/970569642">Contactar</a>
+              </div>
             </div>
-          </div>
-          <img className='hero__img' src={require('./img/profile.png')}></img>
-        </div>
-      </div>
-      <div id='tech'>
-        <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='tech'>
-          <h2 className='subTitle'>Tecnologías</h2>
-          <p className='text--gray'>Estas son las tecnologías en las que me especializo</p>
-          <Slider 
-            {...settings}
-            className='tech__list'
-            >
-            <div className='tech__list__item'>
-              <i class="devicon-react-original colored"></i>
-              <p>React</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-vuejs-plain colored"></i>
-              <p>Vuejs</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-angularjs-plain colored"></i>
-              <p>Angular</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-nodejs-plain colored"></i>
-              <p>NodeJS</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-nestjs-original colored"></i>
-              <p>NestJS</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-mysql-original colored"></i>
-              <p>MySQL</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-javascript-plain colored"></i>
-              <p>JavaScript</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-typescript-plain colored"></i>
-              <p>TypeScript</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-ionic-original colored"></i>
-              <p>Ionic</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-git-plain colored"></i>
-              <p>Git</p>
-            </div>
-            <div className='tech__list__item'>
-              <i class="devicon-figma-plain colored"></i>
-              <p>Figma</p>
-            </div>
-          
-          </Slider>
-        </ScrollAnimation>
-      </div>
-      <div id='projects'>
-        <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='projects'>
-          <div className='projects__container container'>
-            <h2 className='subTitle primaryColor'>Mis Proyectos</h2>
-            <p className='text--gray'>Estos son algunos de los proyectos para grandes empresas en los que he trabajado</p>
-            <div className='projects__list'>
-              <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(1)}}>
-                  <img src={img1Pro1}></img>
-                  <div className='projects__list__item__text'>
-                    <h3>Restricciones</h3>
-                    <p>Desarrollado en Simplex Go</p>
-                  </div>
-                </div>
-              </ScrollAnimation>
-              <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(2)}}>
-                  <img src={img1Pro2}></img>
-                  <div className='projects__list__item__text'>
-                    <h3>Cruz del Sur</h3>
-                    <p>Desarrollado en Simplex Go</p>
-                  </div>
-                </div>
-              </ScrollAnimation>
-              <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(3)}}>
-                  <img src={img1Pro3}></img>
-                  <div className='projects__list__item__text'>
-                    <h3>Accesos</h3>
-                    <p>Desarrollado en Simplex Go</p>
-                  </div>
-                </div>
-              </ScrollAnimation>
-            </div>
-          </div>
-        </ScrollAnimation>
-      </div>
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        dialogClassName="modalGallery"
-        aria-labelledby="example-custom-modal-styling-title"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            {projectSelected === 1 ? 'Grupo JJC-SAT' : projectSelected === 2 ? 'Cruz del Sur' : 'Pamolsa'}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Carousel>
-          { 
-            imagesProjectSelected.map((image, index) => (
-              <Carousel.Item interval={2000}>
-                <img
-                  className="carousel-img"
-                  src={image}
-                  alt={`Slide ${index}`}
-                />
-              </Carousel.Item>
-            ))
-          }
-        </Carousel>
-        <p className='modalGallery__text'>{textProjectSelected}</p>
-        <div className='modalGallery__tech'>
-          <div className='modalGallery__tech__front'>
-            <h3>Front-End</h3>
-            <div className='modalGallery__tech__item'>
-              <i class="devicon-vuejs-plain colored"></i>
-              <i class="devicon-ionic-original colored"></i>
-              { projectSelected !== 2 && <i class="devicon-angularjs-plain colored"></i>}
-            </div>
-          </div>
-          <div className='modalGallery__tech__back'>
-            <h3>Back-End</h3>
-            <div className='modalGallery__tech__item'>
-              <i class="devicon-nestjs-plain colored"></i>
-            </div>
+            <img className='hero__img' src={require('./img/profile.png')}></img>
           </div>
         </div>
-        </Modal.Body>
-      </Modal>
-      <div id='contact'>
-        <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='contact container'>
-          <h2 className='subTitle'>Contacto</h2>
-          <p className='text--gray'>Si deseas ponerte en contacto conmigo, no dudes en dejarme un mensaje</p>
-          <form ref={formRef} onSubmit={sendForm}>
-            <label>
-              <span>Nombre:</span>
-              <input name="name" value={form.name} onChange={handleForm} type='text' placeholder='Nombre'></input>
-            </label>
-            <label>
-              Correo:
-              <input name="email" value={form.email} onChange={handleForm} type='text' placeholder='Correo'></input>
-            </label>
-            <label>
-              Mensaje:
-              <textarea name="message" value={form.message} onChange={handleForm} placeholder='Mensaje' rows={10}></textarea>
-            </label>
-            <button className="contact__btn" type="submit">Enviar</button>
-          </form>
-        </ScrollAnimation>
-      </div>
-      <footer className='footer'>
+        <img src={union_secondary_down} className='union'></img>
+        <div id='tech'>
+          <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='tech'>
+            <h2 className='subTitle'>Tecnologías</h2>
+            <p className='text--gray'>Estas son las tecnologías en las que me especializo</p>
+            <Slider 
+              {...settings}
+              className='tech__list'
+              >
+              <div className='tech__list__item'>
+                <i class="devicon-react-original colored"></i>
+                <p>React</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-vuejs-plain colored"></i>
+                <p>Vuejs</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-angularjs-plain colored"></i>
+                <p>Angular</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-nodejs-plain colored"></i>
+                <p>NodeJS</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-nestjs-original colored"></i>
+                <p>NestJS</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-mysql-original colored"></i>
+                <p>MySQL</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-javascript-plain colored"></i>
+                <p>JavaScript</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-typescript-plain colored"></i>
+                <p>TypeScript</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-ionic-original colored"></i>
+                <p>Ionic</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-git-plain colored"></i>
+                <p>Git</p>
+              </div>
+              <div className='tech__list__item'>
+                <i class="devicon-figma-plain colored"></i>
+                <p>Figma</p>
+              </div>
+            
+            </Slider>
+          </ScrollAnimation>
+        </div>
+        <div id='projects'>
+        <img src={union_tertiary_up} className='union'></img>
+        <div className='tertiary_background'>
+
+          <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='projects'>
+            <div className='projects__container container'>
+              <h2 className='subTitle tertiary-color'>Mis Proyectos</h2>
+              <p className='text--gray'>Estos son algunos de los proyectos para grandes empresas en los que he trabajado</p>
+              <div className='projects__list'>
+                <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                  <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(1)}}>
+                    <img src={img1Pro1}></img>
+                    <div className='projects__list__item__text'>
+                      <h3>Restricciones</h3>
+                      <p>Desarrollado en Simplex Go</p>
+                    </div>
+                  </div>
+                </ScrollAnimation>
+                <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                  <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(2)}}>
+                    <img src={img1Pro2}></img>
+                    <div className='projects__list__item__text'>
+                      <h3>Cruz del Sur</h3>
+                      <p>Desarrollado en Simplex Go</p>
+                    </div>
+                  </div>
+                </ScrollAnimation>
+                <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                  <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(3)}}>
+                    <img src={img1Pro3}></img>
+                    <div className='projects__list__item__text'>
+                      <h3>Accesos</h3>
+                      <p>Desarrollado en Simplex Go</p>
+                    </div>
+                  </div>
+                </ScrollAnimation>
+              </div>
+            </div>
+          </ScrollAnimation>
+        </div>
+        <img src={union_tertiary_down} className='union'></img>
+        </div>
+        <Modal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          dialogClassName="modalGallery"
+          aria-labelledby="example-custom-modal-styling-title"
+          >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              {projectSelected === 1 ? 'Grupo JJC-SAT' : projectSelected === 2 ? 'Cruz del Sur' : 'Pamolsa'}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <Carousel>
+            { 
+              imagesProjectSelected.map((image, index) => (
+                <Carousel.Item interval={2000}>
+                  <img
+                    className="carousel-img"
+                    src={image}
+                    alt={`Slide ${index}`}
+                    />
+                </Carousel.Item>
+              ))
+            }
+          </Carousel>
+          <p className='modalGallery__text'>{textProjectSelected}</p>
+          <div className='modalGallery__tech'>
+            <div className='modalGallery__tech__front'>
+              <h3>Front-End</h3>
+              <div className='modalGallery__tech__item'>
+                <i class="devicon-vuejs-plain colored"></i>
+                <i class="devicon-ionic-original colored"></i>
+                { projectSelected !== 2 && <i class="devicon-angularjs-plain colored"></i>}
+              </div>
+            </div>
+            <div className='modalGallery__tech__back'>
+              <h3>Back-End</h3>
+              <div className='modalGallery__tech__item'>
+                <i class="devicon-nestjs-plain colored"></i>
+              </div>
+            </div>
+          </div>
+          </Modal.Body>
+        </Modal>
+        <div id='contact'>
+          <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='contact container'>
+            <h2 className='subTitle'>Contacto</h2>
+            <p className='text--gray'>Si deseas ponerte en contacto conmigo, no dudes en dejarme un mensaje</p>
+            <form ref={formRef} onSubmit={sendForm}>
+              <label>
+                <span>Nombre:</span>
+                <input name="name" value={form.name} onChange={handleForm} type='text' placeholder='Nombre'></input>
+              </label>
+              <label>
+                Correo:
+                <input name="email" value={form.email} onChange={handleForm} type='text' placeholder='Correo'></input>
+              </label>
+              <label>
+                Mensaje:
+                <textarea name="message" value={form.message} onChange={handleForm} placeholder='Mensaje' rows={10}></textarea>
+              </label>
+              <button className="contact__btn" type="submit">Enviar</button>
+            </form>
+          </ScrollAnimation>
+        </div>
+        <img src={union_secondary_up} className='union'></img>
+      </main>
+      <footer ref={footer} className='footer'>
         <div className='footer__social'>
           <a href='https://www.linkedin.com/in/kendall-ramiro-contreras-salazar-b4360620b/' target='_blank'><i class="devicon-linkedin-plain"></i></a>
           <a href='https://github.com/KendallRcs' target='_blank'><i class="devicon-github-original"></i></a>
