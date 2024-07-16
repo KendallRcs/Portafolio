@@ -284,46 +284,46 @@ function App() {
           </ScrollAnimation>
         </div>
         <div id='projects'>
-        <img src={union_tertiary_up} className='union'></img>
-        <div className='tertiary_background'>
+          <img src={union_tertiary_up} className='union'></img>
+          <div className='tertiary_background'>
 
-          <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='projects'>
-            <div className='projects__container container'>
-              <h2 className='subTitle tertiary-color'>Mis Proyectos</h2>
-              <p className='text--gray'>Estos son algunos de los proyectos para grandes empresas en los que he trabajado</p>
-              <div className='projects__list'>
-                <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                  <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(1)}}>
-                    <img src={img1Pro1}></img>
-                    <div className='projects__list__item__text'>
-                      <h3>Restricciones</h3>
-                      <p>Desarrollado en Simplex Go</p>
+            <ScrollAnimation animateIn="fadeIn" animateOnce={true} className='projects'>
+              <div className='projects__container container'>
+                <h2 className='subTitle tertiary-color'>Mis Proyectos</h2>
+                <p className='text--gray'>Estos son algunos de los proyectos para grandes empresas en los que he trabajado</p>
+                <div className='projects__list'>
+                  <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                    <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(1)}}>
+                      <img src={img1Pro1}></img>
+                      <div className='projects__list__item__text'>
+                        <h3>Restricciones</h3>
+                        <p>Desarrollado en Simplex Go</p>
+                      </div>
                     </div>
-                  </div>
-                </ScrollAnimation>
-                <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                  <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(2)}}>
-                    <img src={img1Pro2}></img>
-                    <div className='projects__list__item__text'>
-                      <h3>Cruz del Sur</h3>
-                      <p>Desarrollado en Simplex Go</p>
+                  </ScrollAnimation>
+                  <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                    <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(2)}}>
+                      <img src={img1Pro2}></img>
+                      <div className='projects__list__item__text'>
+                        <h3>Cruz del Sur</h3>
+                        <p>Desarrollado en Simplex Go</p>
+                      </div>
                     </div>
-                  </div>
-                </ScrollAnimation>
-                <ScrollAnimation animateIn='flipInX' animateOnce={true}>
-                  <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(3)}}>
-                    <img src={img1Pro3}></img>
-                    <div className='projects__list__item__text'>
-                      <h3>Accesos</h3>
-                      <p>Desarrollado en Simplex Go</p>
+                  </ScrollAnimation>
+                  <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                    <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(3)}}>
+                      <img src={img1Pro3}></img>
+                      <div className='projects__list__item__text'>
+                        <h3>Accesos</h3>
+                        <p>Desarrollado en Simplex Go</p>
+                      </div>
                     </div>
-                  </div>
-                </ScrollAnimation>
+                  </ScrollAnimation>
+                </div>
               </div>
-            </div>
-          </ScrollAnimation>
-        </div>
-        <img src={union_tertiary_down} className='union'></img>
+            </ScrollAnimation>
+          </div>
+          <img src={union_tertiary_down} className='union'></img>
         </div>
         <Modal
           show={showModal}
