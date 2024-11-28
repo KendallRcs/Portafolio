@@ -30,6 +30,17 @@ import img2Pro3 from './img/pam1.jpg';
 import img3Pro3 from './img/pam2.jpg';
 import img4Pro3 from './img/pam3.jpg';
 import img5Pro3 from './img/pam4.jpg';
+import img0Pro4 from './img/GYMPOSE_logo.jpg';
+import img1Pro4 from './img/gym1.jpg';
+import img3Pro4 from './img/gym3.jpg';
+import img4Pro4 from './img/gym4.jpg';
+import img5Pro4 from './img/gym5.jpg';
+import img6Pro4 from './img/gym6.jpg';
+import img7Pro4 from './img/gym7.jpg';
+import img8Pro4 from './img/gym8.jpg';
+import img9Pro4 from './img/gym9.jpg';
+import img10Pro4 from './img/gym10.jpg';
+import img11Pro4 from './img/gym11.jpg';
 import logo_web from './img/logo_web.png';
 import logo_mobile from './img/logo_mobile.png';
 import logo_mobile2 from './img/logo_mobile2.png';
@@ -49,11 +60,13 @@ function App() {
   const imagesProject1 = [img3Pro1, img4Pro1, img2Pro1, img5Pro1, img6Pro1, img7Pro1];
   const imagesProject2 = [img2Pro2, img3Pro2, img4Pro2, img5Pro2, img6Pro2, img7Pro2, img8Pro2];
   const imagesProject3 = [img2Pro3, img3Pro3, img4Pro3, img5Pro3];
+  const imagesProject4 = [img1Pro4, img3Pro4, img4Pro4, img5Pro4, img6Pro4, img7Pro4, img8Pro4, img9Pro4, img10Pro4, img11Pro4];
   let [imagesProjectSelected, setImagesProjectSelected] = useState([]);
   const [textProjectSelected, setTextProjectSelected] = useState('');
   const project1Description = "Restricciones es un sistema de gestión de requerimientos desarrollado para JJC-SAT. Este proyecto incluye tanto una aplicación web como una aplicación móvil. La aplicación permite a los usuarios gestionar y seguir de manera eficiente los diferentes requerimientos y restricciones dentro de la empresa.\n\nEl frontend fue desarrollado utilizando Vue.js para la versión Web y Ionic con Angular para la versión móvil. Para el backend, se utilizó NestJS\n\nEste sistema fue diseñado para mejorar la organización y el seguimiento de los requerimientos, asegurando una comunicación clara y eficiente entre los diferentes departamentos de JJC-SAT.";
   const project2Description = "El proyecto de registro de actividades y servicios fue desarrollado para Cruz del Sur, permitiendo a la empresa gestionar de manera eficiente sus actividades y servicios. Este sistema incluye una aplicación web y una aplicación móvil, proporcionando flexibilidad y accesibilidad a los usuarios.\n\nEl frontend fue desarrollado utilizando Vue.js para la versión Web y Ionic con Vue3 para la versión móvil. Para el backend, se utilizó NestJS.\n\nEste sistema fue diseñado para mejorar la organización y el seguimiento de las actividades y servicios, asegurando una comunicación clara y eficiente dentro de Cruz del Sur.";
   const project3Description = "Accesos es una solución desarrollada para Pamolsa, diseñada para gestionar las entradas y salidas de empleados y vehículos de la empresa. Este proyecto incluye tanto una aplicación web como una aplicación móvil. La aplicación permite a los usuarios registrar y controlar de manera eficiente el acceso al sitio, mejorando la seguridad y la gestión operativa.\n\nEl frontend fue desarrollado utilizando Vue.js para la versión Web y Ionic con Angular para la versión móvil. Para el backend, se utilizó NestJS.\n\nEste sistema fue diseñado para mejorar la organización y el seguimiento de los accesos, asegurando una comunicación clara y eficiente dentro de Pamolsa.";
+  const project4Description = "El proyecto consiste en una aplicación móvil desarrollada con Ionic y Vue 3 para optimizar posturas en ejercicios de gimnasio. La aplicación permite a los usuarios grabar y analizar videos de sus ejercicios, evaluando su precisión mediante un modelo de Machine Learning. Me encargué del desarrollo de la aplicación móvil, el backend con NestJS y Prisma, y el despliegue del backend en Digital Ocean. Además, colaboré estrechamente con el desarrollador del modelo de Machine Learning para consumir correctamente el microservicio que lo integra. Actualmente, la aplicación móvil está en desarrollo y no ha sido publicada aún.";
 
   useEffect(() => {
     switch(projectSelected) {
@@ -68,6 +81,10 @@ function App() {
       case 3:
         setImagesProjectSelected(imagesProject3)
         setTextProjectSelected(project3Description)
+        break;
+      case 4:
+        setImagesProjectSelected(imagesProject4)
+        setTextProjectSelected(project4Description)
         break;
       default:
         imagesProjectSelected = [];
@@ -293,6 +310,15 @@ function App() {
                 <p className='text--gray'>Estos son algunos de los proyectos para grandes empresas en los que he trabajado</p>
                 <div className='projects__list'>
                   <ScrollAnimation animateIn='flipInX' animateOnce={true}>
+                    <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(4)}}>
+                      <img src={img0Pro4}></img>
+                      <div className='projects__list__item__text'>
+                        <h3>GymPose</h3>
+                        <p>Proyecto Personal</p>
+                      </div>
+                    </div>
+                  </ScrollAnimation>
+                  <ScrollAnimation animateIn='flipInX' animateOnce={true}>
                     <div className='projects__list__item' onClick={() => {setShowModal(true); setProjectSelected(1)}}>
                       <img src={img1Pro1}></img>
                       <div className='projects__list__item__text'>
@@ -333,7 +359,7 @@ function App() {
           >
           <Modal.Header closeButton>
             <Modal.Title id="example-custom-modal-styling-title">
-              {projectSelected === 1 ? 'Grupo JJC-SAT' : projectSelected === 2 ? 'Cruz del Sur' : 'Pamolsa'}
+              {projectSelected === 1 ? 'Grupo JJC-SAT' : projectSelected === 2 ? 'Cruz del Sur' : projectSelected === 3 ? 'Pamolsa' : 'Proyecto Personal'}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -357,7 +383,7 @@ function App() {
               <div className='modalGallery__tech__item'>
                 <i class="devicon-vuejs-plain colored"></i>
                 <i class="devicon-ionic-original colored"></i>
-                { projectSelected !== 2 && <i class="devicon-angularjs-plain colored"></i>}
+                { (projectSelected !== 2 && projectSelected !== 4) && <i class="devicon-angularjs-plain colored"></i>}
               </div>
             </div>
             <div className='modalGallery__tech__back'>
