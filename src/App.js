@@ -207,13 +207,13 @@ function App() {
         </nav>
         <div className="mobile-menu__footer">
           <p>Disponible para nuevos retos</p>
-              <div className="social-links">
-                {socialLinks.map((link) => (
-                  <a key={link.label} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
-                    <span>{link.shortLabel}</span>
-                  </a>
-                ))}
-              </div>
+          <div className="social-links">
+            {socialLinks.map((link) => (
+              <a key={link.label} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
+                <i className={link.icon} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -337,6 +337,12 @@ function App() {
                       </dl>
                       <div className="project-card__stack">
                         {project.stack.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
+                      </div>
+                      <div className="project-card__link">
+                        <b aria-hidden="true">
+                          <FileText size={13} strokeWidth={2} />
+                          <p>case file</p>
+                        </b>
                       </div>
                     </div>
                   </button>
