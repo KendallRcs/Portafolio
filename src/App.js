@@ -3,6 +3,17 @@ import emailjs from '@emailjs/browser';
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from 'react-bootstrap/Modal';
 import Carousel from 'react-bootstrap/Carousel';
+import {
+  CheckCircle2,
+  ClipboardList,
+  Download,
+  FileText,
+  FolderOpen,
+  Mail,
+  MessageCircle,
+  Send,
+  Target,
+} from 'lucide-react';
 import './App.css';
 import projects from './data/projects';
 import logo from './img/logo_web.png';
@@ -60,18 +71,33 @@ const socialLinks = [
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/in/kendall-ramiro-contreras-salazar-b4360620b/',
     icon: 'devicon-linkedin-plain',
+    shortLabel: 'in',
   },
   {
     label: 'GitHub',
     href: 'https://github.com/KendallRcs',
     icon: 'devicon-github-original',
+    shortLabel: 'gh',
   },
+];
+
+const craftPrinciples = [
+  ['Product thinking', 'Entender el contexto antes de decidir interfaz.'],
+  ['Frontend craft', 'Sistemas visuales sólidos, accesibles y mantenibles.'],
+  ['Delivery', 'Código listo para evolucionar con equipos reales.'],
+];
+
+const caseNotes = [
+  ['Challenge', Target],
+  ['Approach', ClipboardList],
+  ['Outcome', CheckCircle2],
 ];
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [formErrors, setFormErrors] = useState({});
   const formRef = useRef(null);
 
   useEffect(() => {
@@ -91,13 +117,33 @@ function App() {
   const closeMenu = () => setMenuOpen(false);
 
   const handleForm = (event) => {
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+    const { name, value } = event.target;
+
+    setForm((current) => ({ ...current, [name]: value }));
+    setFormErrors((current) => ({ ...current, [name]: '' }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!form.name.trim()) errors.name = 'Indica tu nombre para saber con quién conversar.';
+    if (!form.email.trim()) {
+      errors.email = 'Indica un correo para poder responderte.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      errors.email = 'Usa un correo válido, por ejemplo nombre@dominio.com.';
+    }
+    if (!form.message.trim()) errors.message = 'Cuéntame el objetivo o contexto del proyecto.';
+
+    return errors;
   };
 
   const sendForm = async (event) => {
     event.preventDefault();
 
-    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+    const errors = validateForm();
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
       toast.error('Por favor, completa todos los campos.');
       return;
     }
@@ -115,6 +161,7 @@ function App() {
       );
       toast.success('Mensaje enviado correctamente.', { id: sendingToast });
       setForm({ name: '', email: '', message: '' });
+      setFormErrors({});
     } catch (error) {
       toast.error('No se pudo enviar. Escríbeme directamente por correo.', { id: sendingToast });
     }
@@ -160,13 +207,13 @@ function App() {
         </nav>
         <div className="mobile-menu__footer">
           <p>Disponible para nuevos retos</p>
-          <div className="social-links">
-            {socialLinks.map((link) => (
-              <a key={link.label} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
-                <i className={link.icon} />
-              </a>
-            ))}
-          </div>
+              <div className="social-links">
+                {socialLinks.map((link) => (
+                  <a key={link.label} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
+                    <span>{link.shortLabel}</span>
+                  </a>
+                ))}
+              </div>
         </div>
       </div>
 
@@ -176,7 +223,7 @@ function App() {
           <div className="hero__glow hero__glow--two" />
           <div className="hero__inner page-container">
             <div className="hero__content">
-              <div className="availability"><span /> Disponible para nuevos proyectos</div>
+              <div className="availability"><span /> <p>Disponible para nuevos proyectos</p></div>
               <p className="eyebrow">Frontend Developer · Lima, Perú</p>
               <h1>Kendall<br /><span>Contreras.</span></h1>
               <p className="hero__lead">
@@ -185,14 +232,16 @@ function App() {
               </p>
               <div className="hero__actions">
                 <a className="button button--primary" href="#projects">
+                  <FolderOpen size={16} strokeWidth={1.9} aria-hidden="true" />
                   Explorar proyectos
                 </a>
                 <a
                   className="button button--ghost"
                   target="_blank"
                   rel="noreferrer"
-                  href="https://drive.google.com/file/d/1yL5Ac7cxUIaV60Z5n7m-IwjvowQTmC_x/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1hFmZ3LKIjCNEJoZiqzijrBpctmRULaWQ/view?usp=sharing"
                 >
+                  <Download size={16} strokeWidth={1.9} aria-hidden="true" />
                   Descargar CV
                 </a>
               </div>
@@ -200,6 +249,7 @@ function App() {
                 <div><dt>Web</dt><dd>Productos escalables</dd></div>
                 <div><dt>Mobile</dt><dd>Experiencias híbridas</dd></div>
               </dl>
+
             </div>
 
             <div className="hero__visual" aria-label="Fotografía de Kendall Contreras">
@@ -275,10 +325,19 @@ function App() {
                       <p className="project-card__client">{project.client}</p>
                       <h3>{project.title}</h3>
                       <p>{project.summary}</p>
+                      <dl className="project-card__specs">
+                        <div>
+                          <dt>Rol</dt>
+                          <dd>{project.role}</dd>
+                        </div>
+                        <div>
+                          <dt>Plataforma</dt>
+                          <dd>{project.type}</dd>
+                        </div>
+                      </dl>
                       <div className="project-card__stack">
                         {project.stack.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                       </div>
-                      <div className="project-card__link">Ver proyecto</div>
                     </div>
                   </button>
                 </article>
@@ -296,12 +355,22 @@ function App() {
                 Si buscas un desarrollador que conecte diseño, producto y tecnología,
                 conversemos sobre tu próximo reto.
               </p>
+              <div className="craft-principles" aria-label="Principios de trabajo">
+                {craftPrinciples.map(([title, description]) => (
+                  <div key={title}>
+                    <span>{title}</span>
+                    <p>{description}</p>
+                  </div>
+                ))}
+              </div>
               <div className="contact-details">
                 <a href="mailto:kendallramiro@gmail.com">
+                  <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
                   <span>Correo</span>
                   <strong>kendallramiro@gmail.com</strong>
                 </a>
                 <a href="https://wa.me/51970569642" target="_blank" rel="noreferrer">
+                  <MessageCircle size={18} strokeWidth={1.8} aria-hidden="true" />
                   <span>WhatsApp</span>
                   <strong>+51 970 569 642</strong>
                 </a>
@@ -312,18 +381,48 @@ function App() {
               <div className="contact-form__row">
                 <label>
                   <span>Nombre</span>
-                  <input name="name" value={form.name} onChange={handleForm} type="text" placeholder="Tu nombre" autoComplete="name" />
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleForm}
+                    type="text"
+                    placeholder="Tu nombre"
+                    autoComplete="name"
+                    aria-invalid={Boolean(formErrors.name)}
+                    aria-describedby={formErrors.name ? 'name-error' : undefined}
+                  />
+                  {formErrors.name && <small className="field-error" id="name-error">{formErrors.name}</small>}
                 </label>
                 <label>
                   <span>Correo</span>
-                  <input name="email" value={form.email} onChange={handleForm} type="email" placeholder="tu@correo.com" autoComplete="email" />
+                  <input
+                    name="email"
+                    value={form.email}
+                    onChange={handleForm}
+                    type="email"
+                    placeholder="tu@correo.com"
+                    autoComplete="email"
+                    aria-invalid={Boolean(formErrors.email)}
+                    aria-describedby={formErrors.email ? 'email-error' : undefined}
+                  />
+                  {formErrors.email && <small className="field-error" id="email-error">{formErrors.email}</small>}
                 </label>
               </div>
               <label>
                 <span>Cuéntame sobre tu proyecto</span>
-                <textarea name="message" value={form.message} onChange={handleForm} placeholder="Objetivo, alcance y cómo puedo ayudarte..." rows="6" />
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleForm}
+                  placeholder="Objetivo, alcance y cómo puedo ayudarte..."
+                  rows="6"
+                  aria-invalid={Boolean(formErrors.message)}
+                  aria-describedby={formErrors.message ? 'message-error' : undefined}
+                />
+                {formErrors.message && <small className="field-error" id="message-error">{formErrors.message}</small>}
               </label>
               <button className="button button--primary contact-form__submit" type="submit">
+                <Send size={16} strokeWidth={1.9} aria-hidden="true" />
                 Enviar mensaje
               </button>
             </form>
@@ -340,7 +439,7 @@ function App() {
           <div className="social-links">
             {socialLinks.map((link) => (
               <a key={link.label} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
-                <i className={link.icon} />
+                <i className={link.icon} aria-hidden="true" />
               </a>
             ))}
           </div>
@@ -358,27 +457,21 @@ function App() {
         {selectedProject && (
           <>
             <Modal.Header closeButton>
-              <div>
-                <p>{selectedProject.client}</p>
+              <div className="project-modal__heading">
+                <p><FileText size={14} strokeWidth={2} aria-hidden="true" /> case file / {selectedProject.client}</p>
                 <Modal.Title id="project-modal-title">{selectedProject.title}</Modal.Title>
               </div>
             </Modal.Header>
             <Modal.Body>
-              <Carousel interval={null} className="project-gallery">
-                {selectedProject.gallery.map((image, index) => (
-                  <Carousel.Item key={`${selectedProject.id}-${index}`}>
-                    <img src={image} alt={`${selectedProject.title}, evidencia ${index + 1}`} />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-              <div className="project-modal__details">
-                <div>
-                  <p className="project-modal__label">El proyecto</p>
-                  {selectedProject.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              <div className="project-modal__hero">
+                <div className="project-modal__summary">
+                  <p className="project-modal__label">Resumen</p>
+                  <h3>{selectedProject.summary}</h3>
                 </div>
-                <aside>
+                <aside className="project-modal__spec-sheet" aria-label="Ficha técnica del proyecto">
                   <div><span>Rol</span><strong>{selectedProject.role}</strong></div>
                   <div><span>Plataforma</span><strong>{selectedProject.type}</strong></div>
+                  <div><span>Cliente</span><strong>{selectedProject.client}</strong></div>
                   <div>
                     <span>Tecnologías</span>
                     <div className="project-modal__tags">
@@ -386,6 +479,23 @@ function App() {
                     </div>
                   </div>
                 </aside>
+              </div>
+              <div className="project-modal__body-grid">
+                <Carousel interval={null} className="project-gallery">
+                  {selectedProject.gallery.map((image, index) => (
+                    <Carousel.Item key={`${selectedProject.id}-${index}`}>
+                      <img src={image} alt={`${selectedProject.title}, evidencia ${index + 1}`} />
+                    </Carousel.Item>
+                  ))}
+                </Carousel>
+                <div className="project-modal__case-notes">
+                  {caseNotes.map(([label, Icon]) => (
+                    <div key={label}>
+                      <span><Icon size={14} strokeWidth={2} aria-hidden="true" /> {label}</span>
+                      <p>{selectedProject[label.toLowerCase()]}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Modal.Body>
           </>
