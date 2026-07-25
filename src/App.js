@@ -9,6 +9,7 @@ import {
   Download,
   FileText,
   FolderOpen,
+  LoaderCircle,
   Mail,
   MessageCircle,
   Send,
@@ -17,7 +18,6 @@ import {
 import './App.css';
 import projects from './data/projects';
 import logo from './img/logo_web.png';
-import profile from './img/profile_pic.jpeg';
 
 const technologyGroups = [
   {
@@ -25,6 +25,7 @@ const technologyGroups = [
     description: 'SPA, SSR y experiencias multiplataforma enfocadas en producto.',
     items: [
       ['React', 'devicon-react-original'],
+      ['Next.js', 'devicon-nextjs-plain'],
       ['Vue.js', 'devicon-vuejs-plain'],
       ['Nuxt', 'devicon-nuxtjs-plain'],
       ['Angular', 'devicon-angularjs-plain'],
@@ -66,6 +67,80 @@ const technologyGroups = [
   },
 ];
 
+const heroTechnologyAnchors = [
+  [7, 14],
+  [20, 10],
+  [33, 16],
+  [47, 9],
+  [61, 15],
+  [75, 10],
+  [89, 15],
+  [6, 31],
+  [50, 24],
+  [94, 31],
+  [5, 49],
+  [95, 49],
+  [6, 67],
+  [94, 67],
+  [8, 84],
+  [22, 79],
+  [36, 87],
+  [50, 81],
+  [64, 87],
+  [78, 79],
+  [92, 84],
+];
+
+const heroTechnologyMobileAnchors = [
+  [7, 10],
+  [24, 10],
+  [41, 10],
+  [59, 10],
+  [76, 10],
+  [93, 10],
+  [10, 22],
+  [30, 22],
+  [50, 22],
+  [70, 22],
+  [90, 22],
+  [10, 80],
+  [30, 80],
+  [50, 80],
+  [70, 80],
+  [90, 80],
+  [10, 91],
+  [30, 91],
+  [50, 91],
+  [70, 91],
+  [90, 91],
+];
+
+const heroTechnologyNarrowAnchors = [
+  [14, 7],
+  [38, 7],
+  [62, 7],
+  [86, 7],
+  [10, 16],
+  [30, 16],
+  [50, 16],
+  [70, 16],
+  [90, 16],
+  [34, 25],
+  [66, 25],
+  [14, 78],
+  [38, 78],
+  [62, 78],
+  [86, 78],
+  [10, 87],
+  [30, 87],
+  [50, 87],
+  [70, 87],
+  [90, 87],
+  [50, 96],
+];
+
+const heroTechnologies = technologyGroups.flatMap((group) => group.items);
+
 const socialLinks = [
   {
     label: 'LinkedIn',
@@ -98,7 +173,9 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [formErrors, setFormErrors] = useState({});
+  const [isSending, setIsSending] = useState(false);
   const formRef = useRef(null);
+  const heroRef = useRef(null);
 
   useEffect(() => {
     const closeOnEscape = (event) => {
@@ -113,6 +190,20 @@ function App() {
       document.body.style.overflow = '';
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+
+    if (!hero || !('IntersectionObserver' in window)) return undefined;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      hero.classList.toggle('hero--motion-paused', !entry.isIntersecting);
+    }, { threshold: 0.05 });
+
+    observer.observe(hero);
+
+    return () => observer.disconnect();
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -140,6 +231,8 @@ function App() {
   const sendForm = async (event) => {
     event.preventDefault();
 
+    if (isSending) return;
+
     const errors = validateForm();
 
     if (Object.keys(errors).length > 0) {
@@ -149,6 +242,7 @@ function App() {
     }
 
     const sendingToast = toast.loading('Enviando mensaje...');
+    setIsSending(true);
 
     try {
       await emailjs.sendForm(
@@ -164,6 +258,8 @@ function App() {
       setFormErrors({});
     } catch (error) {
       toast.error('No se pudo enviar. Escríbeme directamente por correo.', { id: sendingToast });
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -200,10 +296,10 @@ function App() {
 
       <div className={`mobile-menu ${menuOpen ? 'mobile-menu--open' : ''}`} id="mobile-navigation">
         <nav aria-label="Navegación móvil">
-          <a href="#hero" onClick={closeMenu}>Inicio <span>01</span></a>
-          <a href="#tech" onClick={closeMenu}>Tecnologías <span>02</span></a>
-          <a href="#projects" onClick={closeMenu}>Proyectos <span>03</span></a>
-          <a href="#contact" onClick={closeMenu}>Contacto <span>04</span></a>
+          <a href="#hero" onClick={closeMenu}>Inicio</a>
+          <a href="#tech" onClick={closeMenu}>Tecnologías</a>
+          <a href="#projects" onClick={closeMenu}>Proyectos</a>
+          <a href="#contact" onClick={closeMenu}>Contacto</a>
         </nav>
         <div className="mobile-menu__footer">
           <p>Disponible para nuevos retos</p>
@@ -218,14 +314,13 @@ function App() {
       </div>
 
       <main id="main-content">
-        <section className="hero" id="hero">
-          <div className="hero__glow hero__glow--one" />
-          <div className="hero__glow hero__glow--two" />
+        <section className="hero" id="hero" ref={heroRef}>
           <div className="hero__inner page-container">
             <div className="hero__content">
-              <div className="availability"><span /> <p>Disponible para nuevos proyectos</p></div>
-              <p className="eyebrow">Frontend Developer · Lima, Perú</p>
-              <h1>Kendall<br /><span>Contreras.</span></h1>
+              <p className="sr-only">
+                Frontend Developer especializado en productos web y mobile.
+              </p>
+              <h1>Kendall <span>Contreras.</span></h1>
               <p className="hero__lead">
                 Diseño y construyo productos digitales que equilibran una interfaz cuidada,
                 código mantenible y objetivos reales de negocio.
@@ -245,25 +340,43 @@ function App() {
                   Descargar CV
                 </a>
               </div>
-              <dl className="hero__stats">
-                <div><dt>Web</dt><dd>Productos escalables</dd></div>
-                <div><dt>Mobile</dt><dd>Experiencias híbridas</dd></div>
-              </dl>
-
             </div>
+          </div>
 
-            <div className="hero__visual" aria-label="Fotografía de Kendall Contreras">
-              <div className="hero__visual-grid" />
-              <img src={profile} alt="Kendall Contreras, Frontend Developer" />
-              <div className="code-card" aria-hidden="true">
-                <div><span /> <span /> <span /></div>
-                <code><b>const</b> approach = {'{'}</code>
-                <code>&nbsp;&nbsp;ux: <em>'intuitive'</em>,</code>
-                <code>&nbsp;&nbsp;code: <em>'maintainable'</em>,</code>
-                <code>&nbsp;&nbsp;product: <em>'useful'</em></code>
-                <code>{'}'};</code>
-              </div>
-            </div>
+          <div className="hero__tech-cloud" aria-label="Tecnologías que utilizo">
+            {heroTechnologies.map(([name, icon], index) => {
+              const [x, y] = heroTechnologyAnchors[index];
+              const [mobileX, mobileY] = heroTechnologyMobileAnchors[index];
+              const [narrowX, narrowY] = heroTechnologyNarrowAnchors[index];
+              const direction = index % 2 === 0 ? -1 : 1;
+
+              return (
+                <a
+                  className="hero-tech"
+                  href="#tech"
+                  key={name}
+                  aria-label={`Ver ${name} en la sección de tecnologías`}
+                  style={{
+                    '--tech-x': `${x}%`,
+                    '--tech-y': `${y}%`,
+                    '--tech-mobile-x': `${mobileX}%`,
+                    '--tech-mobile-y': `${mobileY}%`,
+                    '--tech-narrow-x': `${narrowX}%`,
+                    '--tech-narrow-y': `${narrowY}%`,
+                    '--tech-delay': `${-(index % 7) * 0.85}s`,
+                    '--tech-duration': `${7.2 + (index % 5) * 0.75}s`,
+                    '--tech-drift-x': `${direction * (7 + (index % 3) * 3)}px`,
+                    '--tech-drift-y': `${8 + (index % 4) * 3}px`,
+                    '--tech-tilt': `${direction * (1 + (index % 2))}deg`,
+                  }}
+                >
+                  <span className="hero-tech__surface">
+                    <i className={`${icon} colored`} aria-hidden="true" />
+                    <span>{name}</span>
+                  </span>
+                </a>
+              );
+            })}
           </div>
         </section>
 
@@ -271,8 +384,8 @@ function App() {
           <div className="page-container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">01 · Capacidades</p>
-                <h2>Tecnología con<br />criterio de producto.</h2>
+                <p className="eyebrow">Capacidades</p>
+                <h2>Tecnología con<br /><span>Criterio de Producto.</span></h2>
               </div>
               <p>
                 Selecciono herramientas según el contexto y construyo experiencias consistentes,
@@ -301,8 +414,8 @@ function App() {
           <div className="page-container">
             <div className="section-heading section-heading--light">
               <div>
-                <p className="eyebrow">02 · Trabajo seleccionado</p>
-                <h2>Productos pensados<br />para resolver.</h2>
+                <p className="eyebrow">Trabajo seleccionado</p>
+                <h2>Productos pensados<br /><span>Para Resolver.</span></h2>
               </div>
               <p>
                 Una selección de plataformas web y móviles en las que participé desde la
@@ -355,8 +468,8 @@ function App() {
         <section className="section contact-section" id="contact">
           <div className="page-container contact-layout">
             <div className="contact-copy">
-              <p className="eyebrow">03 · Contacto</p>
-              <h2>Construyamos algo<br /><span>que importe.</span></h2>
+              <p className="eyebrow">Contacto</p>
+              <h2>Construyamos algo<br /><span>Que Importe.</span></h2>
               <p>
                 Si buscas un desarrollador que conecte diseño, producto y tecnología,
                 conversemos sobre tu próximo reto.
@@ -427,9 +540,16 @@ function App() {
                 />
                 {formErrors.message && <small className="field-error" id="message-error">{formErrors.message}</small>}
               </label>
-              <button className="button button--primary contact-form__submit" type="submit">
-                <Send size={16} strokeWidth={1.9} aria-hidden="true" />
-                Enviar mensaje
+              <button
+                className="button button--primary contact-form__submit"
+                type="submit"
+                disabled={isSending}
+                aria-busy={isSending}
+              >
+                {isSending
+                  ? <LoaderCircle className="button__spinner" size={16} strokeWidth={1.9} aria-hidden="true" />
+                  : <Send size={16} strokeWidth={1.9} aria-hidden="true" />}
+                {isSending ? 'Enviando...' : 'Enviar mensaje'}
               </button>
             </form>
           </div>
