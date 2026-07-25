@@ -10,7 +10,6 @@ import {
   FileText,
   FolderOpen,
   LoaderCircle,
-  Mail,
   MessageCircle,
   Send,
   Target,
@@ -18,6 +17,7 @@ import {
 import './App.css';
 import projects from './data/projects';
 import logo from './img/logo_web.png';
+import aboutImage from './img/about_me.png';
 
 const technologyGroups = [
   {
@@ -156,12 +156,6 @@ const socialLinks = [
   },
 ];
 
-const craftPrinciples = [
-  ['Product thinking', 'Entender el contexto antes de decidir interfaz.'],
-  ['Frontend craft', 'Sistemas visuales sólidos, accesibles y mantenibles.'],
-  ['Delivery', 'Código listo para evolucionar con equipos reales.'],
-];
-
 const caseNotes = [
   ['Challenge', Target],
   ['Approach', ClipboardList],
@@ -265,8 +259,6 @@ function App() {
 
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">Saltar al contenido</a>
-
       <header className="site-header">
         <div className="site-header__inner page-container">
           <a className="brand" href="#hero" aria-label="Ir al inicio">
@@ -275,6 +267,7 @@ function App() {
 
           <nav className="desktop-nav" aria-label="Navegación principal">
             <a href="#hero">Inicio</a>
+            <a href="#about">Sobre mí</a>
             <a href="#tech">Tecnologías</a>
             <a href="#projects">Proyectos</a>
             <a className="nav-cta" href="#contact">Hablemos</a>
@@ -297,6 +290,7 @@ function App() {
       <div className={`mobile-menu ${menuOpen ? 'mobile-menu--open' : ''}`} id="mobile-navigation">
         <nav aria-label="Navegación móvil">
           <a href="#hero" onClick={closeMenu}>Inicio</a>
+          <a href="#about" onClick={closeMenu}>Sobre mí</a>
           <a href="#tech" onClick={closeMenu}>Tecnologías</a>
           <a href="#projects" onClick={closeMenu}>Proyectos</a>
           <a href="#contact" onClick={closeMenu}>Contacto</a>
@@ -318,7 +312,7 @@ function App() {
           <div className="hero__inner page-container">
             <div className="hero__content">
               <p className="sr-only">
-                Frontend Developer especializado en productos web y mobile.
+                Fullstack Developer especializado en productos web y mobile.
               </p>
               <h1>Kendall <span>Contreras.</span></h1>
               <p className="hero__lead">
@@ -377,6 +371,47 @@ function App() {
                 </a>
               );
             })}
+          </div>
+        </section>
+
+        <section className="section about-section" id="about">
+          <div className="page-container about-layout">
+            <div className="about-copy">
+              <p className="eyebrow">Sobre mí</p>
+              <h2>Producto e <span>Ingeniería.</span></h2>
+              <div className="about-copy__body">
+                <p>
+                  Soy Kendall Contreras, desarrollador fullstack en Lima, Perú. Diseño y construyo
+                  productos web y móviles de extremo a extremo, conectando interfaces cuidadas
+                  con servicios, APIs y datos mantenibles.
+                </p>
+                <p>
+                  Mi meta es seguir creando soluciones que respondan a necesidades reales y
+                  puedan evolucionar con claridad. Me interesa participar desde el entendimiento
+                  del problema y la arquitectura hasta la entrega y mejora continua del producto.
+                </p>
+              </div>
+              <dl className="about-facts">
+                <div>
+                  <dt>Enfoque</dt>
+                  <dd>Fullstack y producto</dd>
+                </div>
+                <div>
+                  <dt>Plataformas</dt>
+                  <dd>Web y mobile</dd>
+                </div>
+                <div>
+                  <dt>Objetivo</dt>
+                  <dd>Productos útiles y mantenibles</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div className="about-visual" aria-label="Retrato de Kendall Contreras">
+              <div className="about-visual__frame">
+                <img src={aboutImage} alt="Kendall Contreras, desarrollador fullstack" />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -471,29 +506,9 @@ function App() {
               <p className="eyebrow">Contacto</p>
               <h2>Construyamos algo<br /><span>Que Importe.</span></h2>
               <p>
-                Si buscas un desarrollador que conecte diseño, producto y tecnología,
+                Si buscas un desarrollador fullstack que conecte diseño, producto y tecnología,
                 conversemos sobre tu próximo reto.
               </p>
-              <div className="craft-principles" aria-label="Principios de trabajo">
-                {craftPrinciples.map(([title, description]) => (
-                  <div key={title}>
-                    <span>{title}</span>
-                    <p>{description}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="contact-details">
-                <a href="mailto:kendallramiro@gmail.com">
-                  <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
-                  <span>Correo</span>
-                  <strong>kendallramiro@gmail.com</strong>
-                </a>
-                <a href="https://wa.me/51970569642" target="_blank" rel="noreferrer">
-                  <MessageCircle size={18} strokeWidth={1.8} aria-hidden="true" />
-                  <span>WhatsApp</span>
-                  <strong>+51 970 569 642</strong>
-                </a>
-              </div>
             </div>
 
             <form className="contact-form" ref={formRef} onSubmit={sendForm}>
@@ -560,7 +575,7 @@ function App() {
         <div className="page-container site-footer__inner">
           <div>
             <a className="brand" href="#hero"><img src={logo} alt="Kendall Contreras" /></a>
-            <p>Frontend Developer enfocado en productos digitales.</p>
+            <p>Fullstack Developer enfocado en productos digitales.</p>
           </div>
           <div className="social-links">
             {socialLinks.map((link) => (
@@ -572,6 +587,17 @@ function App() {
           <p className="site-footer__copyright">© {new Date().getFullYear()} Kendall Contreras</p>
         </div>
       </footer>
+
+      <a
+        className="whatsapp-fab"
+        href="https://wa.me/51970569642"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Conversar con Kendall por WhatsApp"
+      >
+        <MessageCircle size={21} strokeWidth={2} aria-hidden="true" />
+        <span>WhatsApp</span>
+      </a>
 
       <Modal
         show={Boolean(selectedProject)}

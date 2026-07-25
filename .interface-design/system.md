@@ -27,7 +27,7 @@ Lenguaje **K-Cut**: dos cortes angulares convergentes, marcos abiertos y conteni
 - Construir la firma con `clip-path`, máscaras, pseudo-elementos y bordes; no con texto `</>` decorativo.
 - Los cortes principales usan `--cut-sm`, `--cut-md` y `--cut-lg`.
 - El azul aparece en el borde de corte, el estado activo, la acción principal o el contenido revelado.
-- En títulos de sección, la frase clave puede ir en azul y uppercase; el resto del título conserva el ink de la superficie.
+- En títulos de sección, la frase clave puede ir en azul; el casing se escribe de forma intencional en el contenido y no se fuerza con CSS.
 - La firma es estructural. Evitar repetirla como ornamento pequeño sin función.
 
 ## Depth and surfaces
@@ -61,7 +61,11 @@ Lenguaje **K-Cut**: dos cortes angulares convergentes, marcos abiertos y conteni
 - Project card: button real, dark surface K-Cut, media sin grid ni círculo decorativo, specs grid, stack tags y CTA case file.
 - Tech section desktop: tablero continuo 2×2 con borde sutil; tecnologías en una grilla dominante de dos columnas, iconos de 1.25rem y líneas ligeras con guía angular azul.
 - Tech card: título y descripción compactos; la lista de tecnologías debe ocupar el mayor peso visual del bloque. Hover sin desplazar layout.
+- Contact: dos columnas de igual ancho en desktop —mensaje y formulario—, apiladas en tablet/mobile. El formulario es el canal principal; no repetir correo ni teléfono como datos públicos dentro de la sección.
 - Contact form: paper surface K-Cut, inputs inset con fondo muy suave, focus visible por borde + sombra inset, estado de envío bloqueado.
+- WhatsApp: acción flotante K-Cut verde con texto en desktop y formato compacto de 52px en mobile; debe respetar safe areas y mantener una etiqueta accesible.
+- About: superficie `--paper-bright`, composición editorial de texto + retrato y una franja compacta de enfoque, plataformas y objetivo. El posicionamiento profesional es fullstack y de producto, no exclusivamente frontend.
+- About portrait: usar el PNG transparente `about_me.png` dentro de un marco K-Cut oscuro; dos columnas en desktop y texto antes del retrato al apilarse en tablet/mobile.
 - Hero: composición centrada sin retrato. Nombre en una fila cuando exista ancho suficiente y máximo dos filas en tablet/mobile.
 - Hero tech cloud: todas las tecnologías —incluyendo Next.js— son enlaces a `#tech`, con superficies K-Cut, icono + nombre, hover/focus/active claros y flotación individual solo por `transform`.
 - Hero desktop: burbujas de aproximadamente 50px de alto, iconos de 1.35rem y cinco bandas periféricas que aprovechan el viewport sin invadir la zona central.
