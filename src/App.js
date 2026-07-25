@@ -381,9 +381,9 @@ function App() {
               <h2>Producto e <span>Ingeniería.</span></h2>
               <div className="about-copy__body">
                 <p>
-                  Soy Kendall Contreras, desarrollador fullstack en Lima, Perú. Diseño y construyo
-                  productos web y móviles de extremo a extremo, conectando interfaces cuidadas
-                  con servicios, APIs y datos mantenibles.
+                  Soy Kendall Contreras, Ingeniero de Software y desarrollador fullstack en Lima,
+                  Perú. Diseño y construyo productos web y móviles de extremo a extremo,
+                  conectando interfaces cuidadas con servicios, APIs y datos mantenibles.
                 </p>
                 <p>
                   Mi meta es seguir creando soluciones que respondan a necesidades reales y
